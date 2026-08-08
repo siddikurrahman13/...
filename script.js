@@ -1,2339 +1,955 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-
-html,body{
-    width:100%;
-    min-height:100%;
-}
-
-body{
-    min-height:100vh;
-    overflow-x:hidden;
-    background:linear-gradient(to bottom,#020111,#090a1a,#111827);
-    color:#fff;
-}
-
 /* =========================
-   HIDDEN
+   HIDE ALL PAGES
 ========================= */
 
-.hidden{
-    display:none !important;
-}
+function hideAllPages() {
 
+    const pages = [
+        "welcome",
+        "passwordPage",
+        "envelopePage",
+        "letterPage",
+        "chapter2",
+        "chapter3",
+        "finalChapter",
+        "birthdayReveal",
+        "celebrationScene",
+        "ultimateEnding"
+    ];
 
-/* =========================
-   STARS
-========================= */
+    pages.forEach(function (id) {
 
-.stars{
-    position:fixed;
-    width:100%;
-    height:100%;
-    inset:0;
+        const page = document.getElementById(id);
 
-    background-image:
-    radial-gradient(white 1px,transparent 1px),
-    radial-gradient(white 1px,transparent 1px),
-    radial-gradient(white 2px,transparent 2px);
+        if (page) {
+            page.classList.add("hidden");
+        }
 
-    background-size:
-    120px 120px,
-    180px 180px,
-    250px 250px;
-
-    animation:moveStars 60s linear infinite;
-
-    opacity:.8;
-
-    pointer-events:none;
-    z-index:0;
-}
-
-@keyframes moveStars{
-
-    from{
-        transform:translateY(0);
-    }
-
-    to{
-        transform:translateY(-250px);
-    }
+    });
 
 }
 
 
 /* =========================
-   WELCOME
+   WELCOME → PASSWORD
 ========================= */
 
-#welcome{
-    width:100%;
-    height:100vh;
+function nextPage() {
 
-    display:flex;
+    hideAllPages();
 
-    justify-content:center;
-    align-items:center;
+    document
+        .getElementById("passwordPage")
+        .classList.remove("hidden");
 
-    flex-direction:column;
-
-    text-align:center;
-
-    padding:20px;
-
-    position:relative;
-
-    z-index:2;
-
-    animation:fadeIn 2s;
-}
-
-#welcome h3{
-    color:#ffd369;
-
-    margin-bottom:15px;
-
-    font-weight:400;
-
-    letter-spacing:.5px;
-}
-
-#welcome h1{
-    font-size:55px;
-
-    margin-bottom:20px;
-
-    text-shadow:
-        0 0 15px #ff4fa3,
-        0 0 30px rgba(255,79,163,.4);
-}
-
-#welcome p{
-    max-width:650px;
-
-    line-height:35px;
-
-    font-size:20px;
-
-    color:#d8d8d8;
 }
 
 
 /* =========================
-   BUTTON
+   PASSWORD → ENVELOPE
 ========================= */
 
-button{
-    margin-top:40px;
+function checkPassword() {
 
-    padding:15px 40px;
+    const pass = document
+        .getElementById("password")
+        .value
+        .toLowerCase()
+        .trim();
 
-    border:none;
+    if (pass === "favourite chapter") {
 
-    border-radius:40px;
+        hideAllPages();
 
-    background:#ff4fa3;
+        document
+            .getElementById("envelopePage")
+            .classList.remove("hidden");
 
-    color:white;
+    } else {
 
-    font-size:18px;
+        alert("Wrong Password 💔");
 
-    cursor:pointer;
-
-    transition:.4s;
-
-    box-shadow:
-        0 8px 25px rgba(255,79,163,.25);
-}
-
-button:hover{
-    transform:scale(1.08);
-
-    box-shadow:
-        0 0 25px #ff4fa3,
-        0 10px 35px rgba(255,79,163,.35);
-}
-
-
-/* =========================
-   COMMON PAGE
-========================= */
-
-.page{
-    width:100%;
-    min-height:100vh;
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    position:relative;
-
-    z-index:2;
-
-    padding:20px;
-}
-
-
-/* =========================
-   PASSWORD
-========================= */
-
-#passwordPage{
-    width:100%;
-    height:100vh;
-}
-
-.glass{
-    width:380px;
-
-    max-width:90%;
-
-    padding:40px;
-
-    border-radius:25px;
-
-    background:rgba(255,255,255,.08);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-
-    box-shadow:
-        0 0 30px rgba(255,255,255,.15),
-        0 20px 50px rgba(0,0,0,.35);
-
-    text-align:center;
-
-    animation:fadeIn 1s;
-}
-
-.glass h2{
-    margin-bottom:20px;
-
-    font-size:28px;
-}
-
-.glass p{
-    color:#ddd;
-
-    line-height:30px;
-
-    margin-bottom:20px;
-}
-
-.glass input{
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:12px;
-
-    outline:none;
-
-    text-align:center;
-
-    font-size:17px;
-
-    background:rgba(255,255,255,.95);
-
-    color:#333;
-}
-
-.glass button{
-    width:100%;
-
-    margin-top:20px;
-}
-
-.glass small{
-    display:block;
-
-    margin-top:15px;
-
-    color:#bbb;
-}
-
-
-/* =========================
-   ENVELOPE
-========================= */
-
-#envelopePage{
-    flex-direction:column;
-}
-
-.envelope{
-    width:280px;
-
-    height:180px;
-
-    background:#ffb6c1;
-
-    border-radius:10px;
-
-    position:relative;
-
-    cursor:pointer;
-
-    transition:.4s;
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.35),
-        0 0 25px rgba(255,79,163,.15);
-}
-
-.envelope:hover{
-    transform:scale(1.05);
-
-    box-shadow:
-        0 18px 40px rgba(0,0,0,.4),
-        0 0 30px rgba(255,79,163,.25);
-}
-
-.cover{
-    position:absolute;
-
-    top:0;
-    left:0;
-
-    width:100%;
-
-    height:90px;
-
-    background:#ff8fab;
-
-    clip-path:polygon(
-        0 0,
-        100% 0,
-        50% 100%
-    );
-}
-
-.letter{
-    position:absolute;
-
-    width:90%;
-
-    height:85%;
-
-    left:5%;
-
-    bottom:5%;
-
-    background:white;
-
-    border-radius:8px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:55px;
-
-    box-shadow:
-        0 5px 15px rgba(0,0,0,.12);
-}
-
-.tapText{
-    margin-top:25px;
-
-    color:#ddd;
-
-    letter-spacing:1px;
-
-    font-size:15px;
-
-    animation:tapPulse 2s infinite;
-}
-
-@keyframes tapPulse{
-
-    0%,100%{
-        opacity:.55;
-    }
-
-    50%{
-        opacity:1;
     }
 
 }
 
 
 /* =========================
-   LETTER PAGE
+   ENVELOPE → CHAPTER 1
 ========================= */
 
-#letterPage{
-    width:100%;
+function openEnvelope() {
 
-    min-height:100vh;
+    hideAllPages();
 
-    display:flex;
+    document
+        .getElementById("letterPage")
+        .classList.remove("hidden");
 
-    justify-content:center;
+    document
+        .getElementById("nextChapterBtn")
+        .style.display = "none";
 
-    align-items:flex-start;
-
-    padding:
-        50px 20px 120px;
-}
-
-.paper{
-    width:700px;
-
-    max-width:95%;
-
-    background:#fffdf8;
-
-    color:#333;
-
-    padding:40px;
-
-    border-radius:20px;
-
-    box-shadow:
-        0 20px 40px rgba(0,0,0,.35),
-        0 0 25px rgba(255,255,255,.06);
-
-    animation:fadeIn 1s;
-
-    position:relative;
-}
-
-.paper h2{
-    text-align:center;
-
-    margin-bottom:30px;
-
-    color:#ff4f81;
-
-    font-size:26px;
-}
-
-#typewriter{
-    font-size:20px;
-
-    line-height:38px;
-
-    white-space:pre-line;
-}
-
-
-/* =========================
-   CONTINUE BUTTON
-========================= */
-
-#nextChapterBtn{
-    display:none;
-
-    position:fixed;
-
-    left:50%;
-
-    bottom:20px;
-
-    transform:translateX(-50%);
-
-    z-index:1000;
-
-    margin:0;
-
-    padding:14px 30px;
-
-    min-width:270px;
-
-    border:none;
-
-    border-radius:30px;
-
-    background:#ff4fa3;
-
-    color:white;
-
-    font-size:17px;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 8px 25px rgba(255,79,163,.4);
-
-    animation:buttonAppear 1s ease;
-}
-
-#nextChapterBtn:hover{
-    transform:translateX(-50%) scale(1.06);
-
-    box-shadow:
-        0 0 25px #ff4fa3;
-}
-
-@keyframes buttonAppear{
-
-    from{
-        opacity:0;
-
-        transform:
-            translateX(-50%)
-            translateY(30px);
-    }
-
-    to{
-        opacity:1;
-
-        transform:
-            translateX(-50%)
-            translateY(0);
-    }
+    startLetter();
 
 }
 
 
 /* =========================
-   FADE
+   CHAPTER 1
 ========================= */
 
-@keyframes fadeIn{
+const lines = [
 
-    from{
-        opacity:0;
+    "Hey tui... ❤️",
 
-        transform:
-            translateY(30px);
+    "Haa... tokei bolchi. 😊",
+
+    "Hoyto vabchis...",
+
+    "Eta sudhu ekta website... na",
+
+    "Eta amar tor jonno banano ekta chotto surprise. 🤍",
+
+    "So aste aste por...",
+
+    "Golpota ekhono shesh hoyni... ✨"
+
+];
+
+let line = 0;
+let chapter1Typing = null;
+
+
+function startLetter() {
+
+    line = 0;
+
+    document
+        .getElementById("typewriter")
+        .innerHTML = "";
+
+    showNextLine();
+
+}
+
+
+function showNextLine() {
+
+    if (line >= lines.length) {
+
+        setTimeout(function () {
+
+            document
+                .getElementById("nextChapterBtn")
+                .style.display = "block";
+
+        }, 500);
+
+        return;
+
     }
 
-    to{
-        opacity:1;
+    const text = lines[line];
 
-        transform:
-            translateY(0);
-    }
+    let i = 0;
+
+    const box =
+        document.getElementById("typewriter");
+
+
+    chapter1Typing =
+        setInterval(function () {
+
+            box.innerHTML += text.charAt(i);
+
+            i++;
+
+            if (i >= text.length) {
+
+                clearInterval(chapter1Typing);
+
+                box.innerHTML += "<br><br>";
+
+                line++;
+
+                setTimeout(showNextLine, 1200);
+
+            }
+
+        }, 50);
 
 }
 
 
 /* =========================
-   MOBILE
+   CHAPTER 1 → CHAPTER 2
 ========================= */
 
-@media(max-width:768px){
+function goToChapter2() {
 
-    #welcome h1{
-        font-size:40px;
-    }
+    hideAllPages();
 
-    #welcome h3{
-        font-size:15px;
-    }
+    document
+        .getElementById("chapter2")
+        .classList.remove("hidden");
 
-    #welcome p{
-        font-size:17px;
-
-        line-height:30px;
-    }
-
-    #welcome button{
-        width:90%;
-
-        max-width:350px;
-    }
-
-    .glass{
-        width:380px;
-
-        padding:35px 25px;
-    }
-
-    .glass h2{
-        font-size:25px;
-    }
-
-    .envelope{
-        width:280px;
-
-        height:180px;
-    }
-
-    #letterPage{
-        padding:
-            35px 15px 120px;
-    }
-
-    .paper{
-        width:100%;
-
-        max-width:95%;
-
-        padding:35px 25px 45px;
-    }
-
-    .paper h2{
-        font-size:24px;
-    }
-
-    #typewriter{
-        font-size:18px;
-
-        line-height:34px;
-    }
-
-    #nextChapterBtn{
-        min-width:240px;
-
-        max-width:90%;
-
-        font-size:15px;
-
-        bottom:18px;
-    }
-
-}
-/* =========================
-   CHAPTER 2
-========================= */
-
-#chapter2{
-    min-height:100vh;
-    padding:30px 20px;
-    text-align:center;
-}
-
-.chapterCard{
-    width:650px;
-    max-width:95%;
-
-    padding:55px 40px;
-
-    border-radius:30px;
-
-    background:rgba(255,255,255,.07);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.4),
-        0 0 35px rgba(255,79,163,.12);
-
-    animation:chapterAppear 1.2s ease;
-}
-
-.chapterNumber{
-    color:#ffd369;
-
-    font-size:14px;
-
-    letter-spacing:4px;
-
-    margin-bottom:20px;
-}
-
-.chapterCard h2{
-    font-size:42px;
-
-    margin-bottom:25px;
-
-    color:#fff;
-
-    text-shadow:
-        0 0 20px rgba(255,79,163,.5);
-}
-
-.chapterIntro{
-    color:#d8d8d8;
-
-    font-size:18px;
-
-    line-height:34px;
-
-    max-width:520px;
-
-    margin:auto;
-}
-
-.chapterCard button{
-    margin-top:35px;
-}
-
-@keyframes chapterAppear{
-
-    from{
-        opacity:0;
-        transform:translateY(40px) scale(.96);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-
-}
-
-
-/* Mobile */
-
-@media(max-width:768px){
-
-    .chapterCard{
-        padding:45px 25px;
-    }
-
-    .chapterCard h2{
-        font-size:32px;
-    }
-
-    .chapterIntro{
-        font-size:17px;
-        line-height:31px;
-    }
-
-}
-/* =========================
-   PREMIUM CHAPTER 2
-========================= */
-
-#chapter2Story{
-    min-height:120px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-}
-
-.chapterStoryText{
-    font-size:21px;
-    line-height:1.9;
-    color:#f5f5f5;
-    max-width:600px;
-    text-shadow:0 0 15px rgba(255,255,255,.12);
-    animation:storyFade .8s ease;
-}
-
-@keyframes storyFade{
-
-    from{
-        opacity:0;
-        transform:translateY(12px);
-        filter:blur(4px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-        filter:blur(0);
-    }
-
-}
-
-#chapter2NextBtn{
-    margin-top:35px;
-    transition:.4s ease;
-}
-
-#chapter2NextBtn:hover{
-    transform:scale(1.06);
-    box-shadow:0 0 30px rgba(255,79,163,.7);
-}
-
-
-/* Mobile */
-
-@media(max-width:768px){
-
-    .chapterStoryText{
-        font-size:18px;
-        line-height:1.8;
-    }
-
-}
-/* =========================
-   SPECIAL DATE MOMENTS
-========================= */
-
-.dateMoment{
-    animation:
-        storyFade .8s ease,
-        dateGlow 2.5s ease-in-out infinite alternate;
-}
-
-.sadMoment{
-    animation:
-        storyFade .8s ease,
-        sadGlow 2.5s ease-in-out infinite alternate;
-}
-
-.returnMoment{
-    animation:
-        storyFade .8s ease,
-        returnGlow 2.5s ease-in-out infinite alternate;
-}
-
-
-@keyframes dateGlow{
-
-    from{
-        text-shadow:
-            0 0 8px rgba(255,211,105,.2);
-    }
-
-    to{
-        text-shadow:
-            0 0 25px rgba(255,211,105,.75);
-    }
-
-}
-
-
-@keyframes sadGlow{
-
-    from{
-        text-shadow:
-            0 0 8px rgba(255,100,130,.15);
-    }
-
-    to{
-        text-shadow:
-            0 0 25px rgba(255,100,130,.65);
-    }
-
-}
-
-
-@keyframes returnGlow{
-
-    from{
-        text-shadow:
-            0 0 10px rgba(255,79,163,.2);
-    }
-
-    to{
-        text-shadow:
-            0 0 30px rgba(255,79,163,.85);
-    }
-
-}
-/* =========================
-   CHAPTER 3 - PREMIUM STYLE
-========================= */
-
-#chapter3 {
-    width: 100%;
-    min-height: 100vh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 40px 20px;
-
-    position: relative;
-    z-index: 2;
-
-    box-sizing: border-box;
-}
-
-.chapter3Paper {
-    width: 700px;
-    max-width: 92%;
-
-    padding: 45px 40px;
-
-    text-align: center;
-
-    background: rgba(255,255,255,0.07);
-
-    border: 1px solid rgba(255,255,255,0.12);
-
-    border-radius: 28px;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,0.35),
-        0 0 35px rgba(255,79,163,0.12);
-
-    backdrop-filter: blur(12px);
-
-    animation: fadeIn 1s ease;
-}
-
-.chapterNumber {
-    font-size: 14px;
-
-    letter-spacing: 6px;
-
-    color: #ffd6e7;
-
-    margin-bottom: 20px;
-}
-
-.chapter3Paper h1 {
-    font-size: 42px;
-
-    line-height: 1.2;
-
-    margin-bottom: 35px;
-
-    color: white;
-
-    text-shadow:
-        0 0 15px rgba(255,79,163,0.5);
-}
-
-#chapter3Story {
-    min-height: 150px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 10px;
-
-    color: white;
-
-    font-size: 20px;
-
-    line-height: 2;
-
-    text-align: center;
-}
-
-.chapterStoryText {
-    max-width: 620px;
-}
-
-#chapter3NextBtn {
-    margin-top: 35px;
-
-    padding: 15px 32px;
-
-    border: none;
-
-    border-radius: 40px;
-
-    background: #ff4fa3;
-
-    color: white;
-
-    font-size: 17px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 30px rgba(255,79,163,0.45);
-
-    transition: 0.3s ease;
-}
-
-#chapter3NextBtn:hover {
-    transform: scale(1.06);
-}
-
-
-/* Mobile */
-
-@media(max-width:768px) {
-
-    #chapter3 {
-        padding: 30px 15px;
-    }
-
-    .chapter3Paper {
-        width: 100%;
-        max-width: 100%;
-
-        padding: 35px 20px;
-
-        border-radius: 22px;
-    }
-
-    .chapter3Paper h1 {
-        font-size: 32px;
-    }
-
-    #chapter3Story {
-        font-size: 18px;
-
-        line-height: 1.9;
-
-        min-height: 170px;
-    }
-
-    #chapter3NextBtn {
-        width: 90%;
-
-        font-size: 16px;
-    }
-
-}
-
-/* =========================
-   FINAL CHAPTER — PREMIUM
-========================= */
-
-#finalChapter,
-#birthdayReveal,
-#ultimateEnding {
-    width: 100%;
-    min-height: 100vh;
-
-    box-sizing: border-box;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 24px 18px;
-
-    position: relative;
-}
-
-
-/* =========================
-   FINAL INTRO
-========================= */
-
-.finalReveal {
-    width: min(620px, 92%);
-
-    text-align: center;
-
-    padding: 48px 28px;
-
-    border-radius: 30px;
-
-    background: rgba(255,255,255,0.055);
-
-    border: 1px solid rgba(255,255,255,0.12);
-
-    backdrop-filter: blur(18px);
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,0.45),
-        0 0 50px rgba(255,79,163,0.10);
-
-    animation: finalIntro 1.2s ease;
-}
-
-
-.finalLabel {
-    font-size: 12px;
-
-    letter-spacing: 5px;
-
-    color: #ffc4dc;
-
-    margin-bottom: 24px;
-}
-
-
-.finalReveal h1 {
-    margin: 0 0 20px;
-
-    color: white;
-
-    font-size: clamp(30px, 7vw, 44px);
-
-    line-height: 1.2;
-
-    text-shadow:
-        0 0 25px rgba(255,79,163,0.35);
-}
-
-
-.finalHint {
-    color: #dcdcdc;
-
-    font-size: 17px;
-
-    line-height: 1.8;
-
-    margin-bottom: 32px;
-}
-
-
-#openFinalBtn {
-    padding: 15px 27px;
-
-    border: none;
-
-    border-radius: 50px;
-
-    background: #ff4fa3;
-
-    color: white;
-
-    font-size: 15px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 10px 35px rgba(255,79,163,0.35);
-
-    transition: all 0.35s ease;
-}
-
-
-#openFinalBtn:hover {
-    transform: translateY(-3px) scale(1.04);
-
-    box-shadow:
-        0 15px 45px rgba(255,79,163,0.55);
-}
-
-
-/* =========================
-   BIRTHDAY REVEAL
-========================= */
-
-#birthdayReveal {
-    text-align: center;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(255,79,163,0.12),
-            transparent 60%
-        );
-}
-
-
-.birthdayContent {
-    width: min(650px, 94%);
-
-    max-height: calc(100vh - 48px);
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    animation: birthdayReveal 1.3s ease;
-}
-
-
-.tinyStars {
-    font-size: 22px;
-
-    color: #ffd3e5;
-
-    margin-bottom: 16px;
-
-    animation: floatingStars 3s ease-in-out infinite;
-}
-
-
-.birthdaySmall {
-    color: #d6d6d6;
-
-    font-size: 14px;
-
-    letter-spacing: 1.5px;
-
-    margin: 0 0 14px;
-}
-
-
-.birthdayContent h1 {
-    margin: 0;
-
-    color: white;
-
-    font-size: clamp(34px, 9vw, 58px);
-
-    letter-spacing: 3px;
-
-    line-height: 1.1;
-
-    text-shadow:
-        0 0 25px rgba(255,79,163,0.45);
-}
-
-
-.birthdayContent h2 {
-    margin: 10px 0 25px;
-
-    color: #ff9bc7;
-
-    font-size: clamp(27px, 7vw, 40px);
-
-    text-shadow:
-        0 0 25px rgba(255,79,163,0.5);
-}
-
-
-/* Typed sentence */
-
-#birthdayMessage {
-    width: min(580px, 100%);
-
-    min-height: 115px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 0 8px;
-
-    box-sizing: border-box;
-
-    color: #f5f5f5;
-
-    font-size: clamp(17px, 4.5vw, 20px);
-
-    line-height: 1.8;
-
-    text-align: center;
-}
-
-
-/* Continue button */
-
-#oneMoreBtn {
-    margin-top: 22px;
-
-    padding: 13px 27px;
-
-    border-radius: 50px;
-
-    border: 1px solid rgba(255,199,220,0.35);
-
-    background: rgba(255,79,163,0.08);
-
-    color: #ffc7dc;
-
-    font-size: 15px;
-
-    cursor: pointer;
-
-    transition: all 0.35s ease;
-}
-
-
-#oneMoreBtn:hover {
-    transform: scale(1.05);
-
-    background: rgba(255,79,163,0.16);
-
-    box-shadow:
-        0 0 25px rgba(255,79,163,0.25);
-}
-
-
-/* =========================
-   ULTIMATE ENDING
-========================= */
-
-#ultimateEnding {
-    text-align: center;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(255,79,163,0.16),
-            transparent 65%
-        );
-}
-
-
-.endingContent {
-    width: min(650px, 94%);
-
-    animation: ultimateAppear 1.8s ease;
-}
-
-
-.endingHeart {
-    font-size: 48px;
-
-    margin-bottom: 20px;
-
-    animation: heartBeat 2s infinite;
-}
-
-
-#ultimateText {
-    color: #f8f8f8;
-
-    font-size: clamp(16px, 4.3vw, 19px);
-
-    line-height: 1.75;
-
-    white-space: pre-line;
-
-    text-align: center;
-}
-
-
-/* =========================
-   ANIMATIONS
-========================= */
-
-@keyframes finalIntro {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(25px)
-            scale(0.96);
-
-        filter: blur(5px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-
-        filter: blur(0);
-    }
-
-}
-
-
-@keyframes birthdayReveal {
-
-    from {
-        opacity: 0;
-
-        transform: scale(0.94);
-
-        filter: blur(7px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform: scale(1);
-
-        filter: blur(0);
-    }
-
-}
-
-
-@keyframes ultimateAppear {
-
-    from {
-        opacity: 0;
-
-        transform: translateY(25px);
-
-        filter: blur(5px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform: translateY(0);
-
-        filter: blur(0);
-    }
-
-}
-
-
-@keyframes floatingStars {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-6px);
-    }
-
-}
-
-
-@keyframes heartBeat {
-
-    0%, 100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.12);
-    }
+    startChapter2();
 
 }
 
 
 /* =========================
-   MOBILE
+   CHAPTER 2
 ========================= */
 
-@media (max-width: 600px) {
+const chapter2Lines = [
 
-    #finalChapter,
-    #birthdayReveal,
-    #ultimateEnding {
-        padding: 18px 14px;
+    "Our story didn't really start with a beautiful moment... 🤍",
+
+    "বরং শুরুটা হয়েছিল একটা classroom-এ... আর একটা ছোট্ট ঝগড়া দিয়ে। 😬",
+
+    "সেদিন কে জানত, ওই মানুষটার সাথেই একদিন এত কথা জমে থাকবে... এত memories তৈরি হবে।",
+
+    "At that time, we weren't even close... সত্যি বলতে, friend বললেও হয়তো একটু বেশি বলা হয়ে যেত।",
+
+    "Then came 28 November 2023... ✨",
+
+    "একটা simple video-তে তোর একটা comment... আর somehow, সেখান থেকেই আবার আমাদের কথা শুরু হলো।",
+
+    "কথা বলতে বলতে একসময় তুই আমাকে তোর number দিতে চাইলি।",
+
+    "But TikTok-এর privacy তখন আমাদের একটু পরীক্ষা নিতে চেয়েছিল। 😭😂",
+
+    "তাই numberটা সরাসরি দেখাতে না পেরে তুই যেভাবে দিলি...",
+
+    "\"zero one seven\" 😁",
+
+    "সত্যি বলছি, তোর ওই বুদ্ধি দেখে আমি সেদিন একটু অবাকই হয়েছিলাম। 😂❤️",
+
+    "তারপর... একটার পর একটা দিন চলে গেল।",
+
+    "কথা বাড়তে থাকল, রাতগুলো একটু একটু করে ছোট হতে থাকল... আর অজান্তেই তুই হয়ে উঠলি আমার পরিচিত মানুষগুলোর মধ্যে একটু আলাদা একজন।",
+
+    "But then... 27 April 2024. 💔",
+
+    "হঠাৎ করেই তুই হারিয়ে গেলি।",
+
+    "কোনো proper goodbye ছিল না... কোনো explanation-ও না।",
+
+    "আমি তোকে খুঁজেছি... কিন্তু কোথাও পেলাম না।",
+
+    "সময় চলে গেল। Days became months... আর আমি ভেবেছিলাম, হয়তো গল্পটা এখানেই শেষ।",
+
+    "But some stories don't end when we think they do...",
+
+    "Because then came 2 June 2025. ✨",
+
+    "একদিন হঠাৎ... an unknown number থেকে একটা message এলো।",
+
+    "আর message-এর ওপাশে ছিলি... তুই। ❤️",
+
+    "কী অদ্ভুত না? এতদিন পরেও somehow, we found our way back to each other.",
+
+    "তারপর থেকে আবার কথা... আবার সেই পরিচিত feeling... আর এবার গল্পটা আর হারিয়ে যায়নি।",
+
+    "Maybe that's what makes our story a little different...",
+
+    "কিছু মানুষ জীবনে আসে খুব quietly...",
+
+    "কিছুদিন থাকে... তারপর হারিয়ে যায়...",
+
+    "কিন্তু যদি তারা সত্যিই important হয়, somehow life তাদের আবার ফিরিয়ে আনে। 🤍",
+
+    "And maybe... that's exactly what happened with us.",
+
+    "কিন্তু জানিস তো... এই গল্পটা এখানেও শেষ হয়নি।",
+
+    "Because the best part of our story... is still being written. ❤️"
+
+];
+
+let chapter2Line = 0;
+let chapter2Typing = null;
+
+
+function startChapter2() {
+
+    chapter2Line = 0;
+
+    document
+        .getElementById("chapter2Story")
+        .innerHTML = "";
+
+    showChapter2Line();
+
+}
+
+
+function showChapter2Line() {
+
+    const box =
+        document.getElementById("chapter2Story");
+
+    const btn =
+        document.getElementById("chapter2NextBtn");
+
+
+    if (chapter2Line >= chapter2Lines.length) {
+
+        btn.innerHTML =
+            "📖 Continue to Chapter 3";
+
+        btn.style.display =
+            "inline-block";
+
+        btn.onclick =
+            goToChapter3;
+
+        return;
+
     }
 
 
-    .finalReveal {
-        padding: 40px 20px;
+    const text =
+        chapter2Lines[chapter2Line];
+
+
+    let specialClass = "";
+
+
+    if (text.includes("28 November 2023")) {
+        specialClass = "dateMoment";
+    }
+
+    if (text.includes("27 April 2024")) {
+        specialClass = "sadMoment";
+    }
+
+    if (text.includes("2 June 2025")) {
+        specialClass = "returnMoment";
     }
 
 
-    .finalLabel {
-        letter-spacing: 4px;
+    box.innerHTML = `
+        <div class="chapterStoryText ${specialClass}"></div>
+    `;
 
-        font-size: 10px;
-    }
 
+    const textBox =
+        box.querySelector(".chapterStoryText");
 
-    .finalHint {
-        font-size: 15px;
-    }
 
+    let i = 0;
 
-    .birthdayContent {
-        max-height: calc(100vh - 36px);
-    }
+    btn.style.display =
+        "none";
 
 
-    .birthdaySmall {
-        font-size: 12px;
-    }
+    chapter2Typing =
+        setInterval(function () {
 
+            textBox.innerHTML +=
+                text.charAt(i);
 
-    #birthdayMessage {
-        min-height: 125px;
+            i++;
 
-        font-size: 17px;
+            if (i >= text.length) {
 
-        line-height: 1.75;
-    }
+                clearInterval(chapter2Typing);
 
+                chapter2Line++;
 
-    #oneMoreBtn {
-        margin-top: 16px;
+                btn.innerHTML =
+                    "Continue ✨";
 
-        padding: 12px 24px;
-    }
+                btn.style.display =
+                    "inline-block";
 
+                btn.onclick =
+                    showChapter2Line;
 
-    #ultimateText {
-        font-size: 16px;
+            }
 
-        line-height: 1.7;
-    }
-
-}
-/* =========================
-   FINAL BIRTHDAY CELEBRATION
-========================= */
-
-#birthdayReveal {
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 40px 15px;
-}
-
-.birthdayContent {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    max-width: 900px;
-}
-
-.birthdaySmall {
-    font-size: 16px;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-}
-
-.birthdayContent h1 {
-    font-size: clamp(34px, 8vw, 70px);
-    margin: 5px 0;
-    letter-spacing: 4px;
-}
-
-.birthdayContent h2 {
-    font-size: clamp(28px, 6vw, 45px);
-    margin: 0 0 25px;
-}
-
-/* Birthday Picture */
-
-.birthdayImageBox {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 25px auto;
-}
-
-.birthday-surprise-image {
-    width: 94%;
-    max-width: 900px;
-    display: block;
-
-    border-radius: 22px;
-
-    box-shadow:
-        0 0 25px rgba(255, 105, 180, 0.35),
-        0 0 70px rgba(255, 105, 180, 0.18);
-
-    opacity: 0;
-    transform: scale(0.92);
-
-    animation: birthdayImageReveal 2s ease forwards;
-}
-
-@keyframes birthdayImageReveal {
-
-    0% {
-        opacity: 0;
-        transform: scale(0.92);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-}
-
-/* Message below picture */
-
-.pictureLine {
-    font-size: 17px;
-    line-height: 1.8;
-    margin: 20px auto 30px;
-    opacity: 0.9;
-}
-
-/* Confetti */
-
-.confetti {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 2;
-}
-
-.confetti span {
-    position: absolute;
-    top: -50px;
-    font-size: 24px;
-    animation: confettiFall 5s linear infinite;
-}
-
-.confetti span:nth-child(1) {
-    left: 8%;
-    animation-delay: 0s;
-}
-
-.confetti span:nth-child(2) {
-    left: 20%;
-    animation-delay: 1s;
-}
-
-.confetti span:nth-child(3) {
-    left: 35%;
-    animation-delay: 2s;
-}
-
-.confetti span:nth-child(4) {
-    left: 50%;
-    animation-delay: 0.5s;
-}
-
-.confetti span:nth-child(5) {
-    left: 65%;
-    animation-delay: 1.5s;
-}
-
-.confetti span:nth-child(6) {
-    left: 78%;
-    animation-delay: 2.5s;
-}
-
-.confetti span:nth-child(7) {
-    left: 88%;
-    animation-delay: 3s;
-}
-
-.confetti span:nth-child(8) {
-    left: 95%;
-    animation-delay: 1s;
-}
-
-@keyframes confettiFall {
-
-    0% {
-        transform: translateY(-60px) rotate(0deg);
-        opacity: 0;
-    }
-
-    15% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-    }
-
-}
-    /* =========================
-   BIRTHDAY PAGE - MOBILE FIX
-   Continue button always visible
-========================= */
-
-#birthdayReveal {
-    min-height: 100vh;
-    padding: 20px 14px 90px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.birthdayContent {
-    width: 100%;
-    max-width: 900px;
-    padding-bottom: 75px;
-}
-
-/* Birthday image slightly smaller on mobile */
-.birthdayImageBox {
-    margin: 18px auto;
-}
-
-.birthday-surprise-image {
-    width: 92%;
-    max-width: 850px;
-}
-
-/* Picture text */
-.pictureLine {
-    margin: 15px auto 18px;
-    font-size: 16px;
-    line-height: 1.65;
-}
-
-/* Birthday typed message */
-#birthdayMessage {
-    min-height: 90px;
-    margin: 0 auto;
-    padding: 0 10px;
-}
-
-/* =========================
-   CONTINUE BUTTON
-   Always visible when shown
-========================= */
-
-#oneMoreBtn {
-    position: fixed;
-    left: 50%;
-    bottom: 18px;
-
-    transform: translateX(-50%);
-
-    z-index: 9999;
-
-    margin: 0;
-
-    min-width: 210px;
-
-    padding: 13px 28px;
-
-    background: rgba(255,79,163,.95);
-
-    color: white;
-
-    border: 1px solid rgba(255,255,255,.25);
-
-    border-radius: 50px;
-
-    box-shadow:
-        0 8px 30px rgba(255,79,163,.45),
-        0 0 20px rgba(255,79,163,.25);
-
-    backdrop-filter: blur(10px);
-
-    -webkit-backdrop-filter: blur(10px);
-
-    font-size: 16px;
-
-    font-weight: 500;
-
-    transition: .3s ease;
-}
-
-#oneMoreBtn:hover {
-    transform: translateX(-50%) scale(1.06);
-
-    box-shadow:
-        0 0 30px rgba(255,79,163,.7),
-        0 10px 35px rgba(255,79,163,.45);
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 600px) {
-
-    #birthdayReveal {
-        align-items: flex-start;
-
-        padding:
-            28px 12px 95px;
-    }
-
-    .birthdayContent {
-        max-width: 100%;
-        padding-bottom: 70px;
-    }
-
-    .tinyStars {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-
-    .birthdaySmall {
-        font-size: 12px;
-        margin-bottom: 8px;
-    }
-
-    .birthdayContent h1 {
-        font-size: clamp(30px, 9vw, 48px);
-        letter-spacing: 2px;
-    }
-
-    .birthdayContent h2 {
-        font-size: 28px;
-        margin-bottom: 12px;
-    }
-
-    .birthdayImageBox {
-        margin: 14px auto;
-    }
-
-    .birthday-surprise-image {
-        width: 94%;
-
-        border-radius: 18px;
-    }
-
-    .pictureLine {
-        font-size: 15px;
-        line-height: 1.6;
-
-        margin:
-            12px auto 15px;
-    }
-
-    #birthdayMessage {
-        min-height: 85px;
-
-        font-size: 16px;
-
-        line-height: 1.65;
-
-        padding:
-            0 8px;
-    }
-
-    #oneMoreBtn {
-        bottom: 14px;
-
-        min-width: 200px;
-
-        padding:
-            12px 24px;
-
-        font-size: 15px;
-    }
-
-}
-/* =========================
-   CINEMATIC FINAL TYPING
-========================= */
-
-#ultimateEnding {
-    min-height: 100vh;
-    padding: 70px 20px;
-    align-items: flex-start;
-    overflow-x: hidden;
-}
-
-.endingContent {
-    width: min(650px, 94%);
-    padding: 30px 10px 100px;
-}
-
-.endingHeart {
-    text-align: center;
-    margin-bottom: 45px;
-}
-
-#ultimateText {
-    width: 100%;
-}
-
-.finalTypingLine {
-    margin: 0 auto 42px;
-
-    max-width: 600px;
-
-    color: #f8f8f8;
-
-    font-size: clamp(16px, 4.3vw, 19px);
-
-    line-height: 1.9;
-
-    text-align: center;
-
-    opacity: 0;
-
-    animation: finalLineAppear 1s ease forwards;
-
-    text-shadow:
-        0 0 12px rgba(255,255,255,.08);
-}
-
-
-.finalTypingLine:last-child {
-    margin-top: 55px;
-
-    color: #ffc7dc;
-
-    font-style: italic;
-}
-
-
-@keyframes finalLineAppear {
-
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-        filter: blur(4px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-
-}
-
-
-/* Mobile */
-
-@media(max-width:600px) {
-
-    #ultimateEnding {
-        padding: 55px 16px 80px;
-    }
-
-    .endingContent {
-        width: 100%;
-        padding-bottom: 80px;
-    }
-
-    .endingHeart {
-        margin-bottom: 55px;
-        font-size: 42px;
-    }
-
-    .finalTypingLine {
-        font-size: 16px;
-        line-height: 1.85;
-        margin-bottom: 38px;
-    }
-
-}
-/* =========================
-   CELEBRATION SCENE
-========================= */
-
-#celebrationScene {
-    width: 100%;
-    min-height: 100vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    position: relative;
-
-    overflow: hidden;
-
-    padding: 40px 20px;
-
-    text-align: center;
-
-    box-sizing: border-box;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(255,79,163,0.10),
-            transparent 65%
-        );
-
-    z-index: 2;
-}
-
-
-/* =========================
-   CELEBRATION CONTENT
-========================= */
-
-.celebrationContent {
-    width: min(650px, 94%);
-
-    position: relative;
-
-    z-index: 10;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    animation: celebrationAppear 1.2s ease;
-}
-
-
-/* =========================
-   INTRO
-========================= */
-
-.celebrationIntro {
-    margin: 0 0 15px;
-
-    color: #dcdcdc;
-
-    font-size: 17px;
-
-    letter-spacing: 1px;
-}
-
-
-/* =========================
-   HEADING
-========================= */
-
-.celebrationContent h2 {
-    margin: 0 0 25px;
-
-    max-width: 600px;
-
-    color: white;
-
-    font-size: clamp(25px, 6vw, 38px);
-
-    line-height: 1.35;
-
-    text-shadow:
-        0 0 20px rgba(255,79,163,0.45);
-}
-
-
-/* =========================
-   CELEBRATION IMAGE
-========================= */
-
-.celebrationImageBox {
-    width: 100%;
-
-    display: flex;
-
-    justify-content: center;
-
-    margin: 10px auto 25px;
-}
-
-.celebrationImage {
-    width: 94%;
-
-    max-width: 600px;
-
-    display: block;
-
-    border-radius: 22px;
-
-    box-shadow:
-        0 0 25px rgba(255,105,180,0.30),
-        0 0 60px rgba(255,105,180,0.15);
-
-    animation: celebrationImageAppear 1.5s ease;
-}
-
-
-/* =========================
-   WISH INSTRUCTION
-========================= */
-
-.wishInstruction {
-    margin: 5px 0 0;
-
-    color: #e5e5e5;
-
-    font-size: 17px;
-
-    line-height: 1.8;
-}
-
-.wishInstruction span {
-    color: #ff9bc7;
-
-    font-weight: 500;
-}
-
-
-/* =========================
-   MAKE A WISH BUTTON
-========================= */
-
-#makeWishBtn {
-    margin-top: 25px;
-
-    padding: 15px 32px;
-
-    border: none;
-
-    border-radius: 50px;
-
-    background: #ff4fa3;
-
-    color: white;
-
-    font-size: 16px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 10px 35px rgba(255,79,163,0.35);
-
-    transition: all 0.35s ease;
-}
-
-#makeWishBtn:hover {
-    transform: translateY(-3px) scale(1.05);
-
-    box-shadow:
-        0 0 30px rgba(255,79,163,0.65);
-}
-
-
-/* =========================
-   CELEBRATION MESSAGE
-========================= */
-
-#celebrationMessage {
-    width: 100%;
-
-    min-height: 100px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    margin-top: 20px;
-
-    color: #f5f5f5;
-
-    font-size: 18px;
-
-    line-height: 1.8;
-
-    text-align: center;
-}
-
-.wishMoment {
-    margin: 0;
-
-    animation: wishAppear 1s ease;
-
-    text-shadow:
-        0 0 18px rgba(255,79,163,0.35);
-}
-
-
-/* =========================
-   CONTINUE BUTTON
-========================= */
-
-#celebrationContinueBtn {
-    margin-top: 20px;
-
-    padding: 14px 30px;
-
-    border: 1px solid rgba(255,199,220,0.35);
-
-    border-radius: 50px;
-
-    background: rgba(255,79,163,0.10);
-
-    color: #ffc7dc;
-
-    font-size: 16px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 25px rgba(255,79,163,0.25);
-
-    transition: all 0.35s ease;
-}
-
-#celebrationContinueBtn:hover {
-    transform: scale(1.06);
-
-    background: rgba(255,79,163,0.18);
-
-    box-shadow:
-        0 0 30px rgba(255,79,163,0.45);
-}
-
-
-/* =========================
-   CONFETTI CONTAINER
-========================= */
-
-#celebrationConfetti {
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    pointer-events: none;
-
-    overflow: hidden;
-
-    z-index: 5;
-}
-
-
-/* =========================
-   CONFETTI PIECES
-========================= */
-
-.confettiPiece {
-    position: absolute;
-
-    top: -50px;
-
-    font-size: 22px;
-
-    line-height: 1;
-
-    animation:
-        celebrationConfettiFall 4.5s linear forwards;
-
-    pointer-events: none;
-}
-
-
-/* =========================
-   ANIMATIONS
-========================= */
-
-@keyframes celebrationAppear {
-
-    from {
-        opacity: 0;
-
-        transform:
-            translateY(25px)
-            scale(0.96);
-
-        filter: blur(5px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-
-        filter: blur(0);
-    }
-
-}
-
-
-@keyframes celebrationImageAppear {
-
-    from {
-        opacity: 0;
-
-        transform: scale(0.90);
-    }
-
-    to {
-        opacity: 1;
-
-        transform: scale(1);
-    }
-
-}
-
-
-@keyframes wishAppear {
-
-    from {
-        opacity: 0;
-
-        transform: translateY(15px);
-
-        filter: blur(4px);
-    }
-
-    to {
-        opacity: 1;
-
-        transform: translateY(0);
-
-        filter: blur(0);
-    }
-
-}
-
-
-@keyframes celebrationConfettiFall {
-
-    0% {
-        transform:
-            translateY(-60px)
-            rotate(0deg);
-
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 1;
-    }
-
-    100% {
-        transform:
-            translateY(110vh)
-            rotate(360deg);
-
-        opacity: 0;
-    }
+        }, 45);
 
 }
 
 
 /* =========================
-   MOBILE
+   CHAPTER 2 → CHAPTER 3
 ========================= */
 
-@media (max-width: 600px) {
+function goToChapter3() {
 
-    #celebrationScene {
-        min-height: 100vh;
+    hideAllPages();
 
-        padding: 30px 15px;
+    document
+        .getElementById("chapter3")
+        .classList.remove("hidden");
+
+    startChapter3();
+
+}
+
+
+/* =========================
+   CHAPTER 3
+========================= */
+
+const chapter3Lines = [
+
+    "At first, everything was pretty simple... 😊",
+
+    "আমি একটু বেশি fun করতাম, আর তুইও সেগুলো equally enjoy করতি।",
+
+    "তারপর কখন যে আমরা এতটা close হয়ে গেলাম... honestly, I didn't even notice. 🤍",
+
+    "কিছু রাত তো এমনও গেছে—9টা-10টায় কথা শুরু করে কখন যে সকাল 5টা-6টা বেজে গেছে, বুঝতেই পারিনি। 🌙",
+
+    "সবচেয়ে অবাক করার বিষয়... এতক্ষণ কথা বলার পরেও আমাদের কথা যেন কখনো শেষ হতো না।",
+
+    "আর তোর ওই জেদটা... 😑❤️",
+
+    "মাঝে মাঝে সত্যিই বিরক্ত করতি, but somehow... that stubborn little side of you became one of my favourite things. 😂",
+
+    "কিন্তু জানিস...",
+
+    "ঠিক কখন তুই আমার কাছে এতটা important হয়ে গেলি, সেটা আমি নিজেও বুঝতে পারিনি।",
+
+    "কোনো particular moment ছিল না... কোনো special day-ও না।",
+
+    "Maybe it happened somewhere between all those random talks, stupid jokes, little arguments and endless nights...",
+
+    "কখন যে 'তুই' শুধু একজন মানুষ না হয়ে আমার favourite person হয়ে গেলি... I just didn't notice. 🤍",
+
+    "And maybe... that's the part I never really said. ❤️"
+
+];
+
+let chapter3Line = 0;
+let chapter3Typing = null;
+
+
+function startChapter3() {
+
+    chapter3Line = 0;
+
+    document
+        .getElementById("chapter3Story")
+        .innerHTML = "";
+
+    document
+        .getElementById("chapter3NextBtn")
+        .style.display = "none";
+
+    showNextChapter3Line();
+
+}
+
+
+function showNextChapter3Line() {
+
+    const box =
+        document.getElementById("chapter3Story");
+
+    const btn =
+        document.getElementById("chapter3NextBtn");
+
+
+    if (chapter3Line >= chapter3Lines.length) {
+
+        btn.innerHTML =
+            "💌 Continue to Final Chapter";
+
+        btn.style.display =
+            "inline-block";
+
+        btn.onclick =
+            goToFinalChapter;
+
+        return;
+
     }
 
 
-    .celebrationContent {
-        width: 100%;
+    const text =
+        chapter3Lines[chapter3Line];
 
-        max-width: 430px;
+
+    let i = 0;
+
+    box.innerHTML = "";
+
+    btn.style.display =
+        "none";
+
+
+    chapter3Typing =
+        setInterval(function () {
+
+            box.innerHTML +=
+                text.charAt(i);
+
+            i++;
+
+            if (i >= text.length) {
+
+                clearInterval(chapter3Typing);
+
+                chapter3Line++;
+
+                btn.innerHTML =
+                    "Continue ✨";
+
+                btn.style.display =
+                    "inline-block";
+
+                btn.onclick =
+                    showNextChapter3Line;
+
+            }
+
+        }, 45);
+
+}
+
+
+/* =========================
+   CHAPTER 3 → FINAL CHAPTER
+========================= */
+
+function goToFinalChapter() {
+
+    hideAllPages();
+
+    const finalPage =
+        document.getElementById("finalChapter");
+
+    finalPage.classList.remove("hidden");
+
+    finalPage.style.display =
+        "flex";
+
+}
+
+
+/* =========================
+   BIRTHDAY WISH
+========================= */
+
+const birthdayLines = [
+
+    "আজকের দিনটা শুধু একটা date না... 🤍",
+
+    "আজ এমন একজন মানুষের birthday, যে somehow আমার গল্পের একটা very special part হয়ে গেছে। ❤️",
+
+    "তোর জন্য আমার একটাই wish—",
+
+    "তুই সবসময় হাসিস, happy থাকিস, আর তোর ছোট-বড় সব dream একদিন সত্যি হোক। ✨",
+
+    "আর জীবন তোকে যত দূরেই নিয়ে যাক... তোর এই সুন্দর হাসিটা যেন কখনো হারিয়ে না যায়। 🤍"
+
+];
+
+let birthdayLine = 0;
+let birthdayTyping = null;
+
+
+/* =========================
+   OPEN FINAL SURPRISE
+   FINAL CHAPTER → BIRTHDAY WISH
+========================= */
+
+function openFinalSurprise() {
+
+    hideAllPages();
+
+    document
+        .getElementById("birthdayReveal")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("birthdayReveal")
+        .style.display = "flex";
+
+
+    birthdayLine = 0;
+
+
+    const box =
+        document.getElementById("birthdayMessage");
+
+    box.innerHTML = "";
+
+
+    const btn =
+        document.getElementById("oneMoreBtn");
+
+    btn.innerHTML =
+        "Continue ✨";
+
+    btn.style.display =
+        "none";
+
+
+    showBirthdayLine();
+
+}
+
+
+/* =========================
+   BIRTHDAY TYPEWRITER
+   ONE SENTENCE AT A TIME
+========================= */
+
+function showBirthdayLine() {
+
+    const box =
+        document.getElementById("birthdayMessage");
+
+    const btn =
+        document.getElementById("oneMoreBtn");
+
+
+    if (birthdayLine >= birthdayLines.length) {
+
+        btn.innerHTML =
+            "🎂 Let's Celebrate";
+
+        btn.style.display =
+            "inline-block";
+
+        btn.onclick =
+            goToCelebration;
+
+        return;
+
     }
 
 
-    .celebrationIntro {
-        font-size: 15px;
-
-        margin-bottom: 10px;
-    }
+    box.innerHTML = "";
 
 
-    .celebrationContent h2 {
-        font-size: 27px;
-
-        line-height: 1.35;
-
-        margin-bottom: 20px;
-    }
+    const text =
+        birthdayLines[birthdayLine];
 
 
-    .celebrationImage {
-        width: 92%;
+    let i = 0;
 
-        border-radius: 18px;
-    }
-
-
-    .wishInstruction {
-        font-size: 16px;
-
-        line-height: 1.7;
-    }
+    btn.style.display =
+        "none";
 
 
-    #makeWishBtn {
-        margin-top: 22px;
+    birthdayTyping =
+        setInterval(function () {
 
-        padding: 14px 28px;
+            box.innerHTML +=
+                text.charAt(i);
 
-        font-size: 15px;
-    }
-
-
-    #celebrationMessage {
-        min-height: 100px;
-
-        font-size: 17px;
-
-        line-height: 1.7;
-    }
+            i++;
 
 
-    #celebrationContinueBtn {
-        margin-top: 15px;
+            if (i >= text.length) {
 
-        padding: 13px 27px;
+                clearInterval(birthdayTyping);
 
-        font-size: 15px;
+                birthdayTyping = null;
+
+                birthdayLine++;
+
+
+                /*
+                   No automatic next sentence.
+                   User must press Continue.
+                */
+
+                btn.innerHTML =
+                    "Continue ✨";
+
+                btn.style.display =
+                    "inline-block";
+
+                btn.onclick =
+                    showBirthdayLine;
+
+            }
+
+        }, 45);
+
+}
+
+
+/* =========================
+   BIRTHDAY WISH → CELEBRATION
+========================= */
+
+function goToCelebration() {
+
+    hideAllPages();
+
+    const celebration =
+        document.getElementById("celebrationScene");
+
+    celebration.classList.remove("hidden");
+
+    celebration.style.display =
+        "flex";
+
+
+    const message =
+        document.getElementById("celebrationMessage");
+
+    message.innerHTML = "";
+
+
+    document
+        .getElementById("celebrationContinueBtn")
+        .style.display = "none";
+
+
+    document
+        .getElementById("makeWishBtn")
+        .style.display = "inline-block";
+
+
+    document
+        .getElementById("celebrationConfetti")
+        .innerHTML = "";
+
+}
+
+
+/* =========================
+   MAKE A WISH
+========================= */
+
+function startCelebration() {
+
+    const wishButton =
+        document.getElementById("makeWishBtn");
+
+    const message =
+        document.getElementById("celebrationMessage");
+
+    const continueBtn =
+        document.getElementById("celebrationContinueBtn");
+
+
+    wishButton.style.display =
+        "none";
+
+
+    message.innerHTML = `
+        <p class="wishMoment">
+            Close your eyes... 🤍
+            <br><br>
+            Make a wish. ✨
+        </p>
+    `;
+
+
+    setTimeout(function () {
+
+        message.innerHTML = `
+            <p class="wishMoment">
+                And now... make it come true. ❤️
+            </p>
+        `;
+
+
+        createConfetti();
+
+
+    }, 2200);
+
+
+    setTimeout(function () {
+
+        continueBtn.style.display =
+            "inline-block";
+
+    }, 4200);
+
+}
+
+
+/* =========================
+   CONFETTI
+========================= */
+
+function createConfetti() {
+
+    const container =
+        document.getElementById("celebrationConfetti");
+
+    const pieces = [
+        "🎉",
+        "🎊",
+        "✨",
+        "💖",
+        "💫",
+        "🌸"
+    ];
+
+
+    container.innerHTML = "";
+
+
+    for (let i = 0; i < 35; i++) {
+
+        const piece =
+            document.createElement("span");
+
+        piece.innerHTML =
+            pieces[Math.floor(Math.random() * pieces.length)];
+
+        piece.style.left =
+            Math.random() * 100 + "%";
+
+        piece.style.animationDelay =
+            Math.random() * 2 + "s";
+
+        piece.classList.add("confettiPiece");
+
+        container.appendChild(piece);
+
     }
 
 }
 
+
+
+/* =========================
+   CELEBRATION → FINAL MESSAGE
+   CINEMATIC TYPING ENDING
+========================= */
+
+function goToFinalMessage() {
+
+    hideAllPages();
+
+    const ending =
+        document.getElementById("ultimateEnding");
+
+    ending.classList.remove("hidden");
+    ending.style.display = "flex";
+
+    const box =
+        document.getElementById("ultimateText");
+
+    box.innerHTML = "";
+
+    const finalLines = [
+
+        "I don't know what the future holds for us...",
+
+        "But I'm really glad that, somehow, our paths crossed again. 🤍",
+
+        "From a classroom argument to endless midnight conversations...",
+
+        "কী সুন্দর একটা little journey হয়ে গেছে, তাই না? ❤️",
+
+        "আর যদি আজ তোর জন্য একটা wish করতে পারতাম...",
+
+        "তাহলে চাইতাম, life তোকে ঠিক সেই happiness-টাই দিক, যেটা তুই unknowingly আমার জীবনে নিয়ে এসেছিস। 🤍",
+
+        "This whole little world you just walked through...",
+
+        "এটা শুধু একটা website ছিল না।",
+
+        "এটা ছিল আমার মনে জমে থাকা কিছু কথা... শুধু তোর জন্য। ❤️",
+
+        "21 August — তোর day, আর somehow এখন আমার কাছেও এই দিন টি special একটা দিন।",
+
+        "সবসময় happy থাকিস। হাসিস। আর নিজের মতোই থাকিস। 🤍",
+
+        "— From someone who's really glad you found your way back. ❤️"
+
+    ];
+
+    let currentLine = 0;
+
+
+    function typeFinalLine() {
+
+        if (currentLine >= finalLines.length) {
+            return;
+        }
+
+
+        const paragraph =
+            document.createElement("p");
+
+        paragraph.className =
+            "finalTypingLine";
+
+        box.appendChild(paragraph);
+
+
+        /* Automatically bring the new line into view */
+
+        paragraph.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+
+        const text =
+            finalLines[currentLine];
+
+        let i = 0;
+
+
+        const typing =
+            setInterval(function () {
+
+                paragraph.textContent +=
+                    text.charAt(i);
+
+                i++;
+
+
+                if (i >= text.length) {
+
+                    clearInterval(typing);
+
+                    currentLine++;
+
+
+                    setTimeout(function () {
+
+                        typeFinalLine();
+
+                    }, 1200);
+
+                }
+
+            }, 45);
+
+    }
+
+
+    /* Start typing */
+
+    setTimeout(function () {
+
+        typeFinalLine();
+
+    }, 1000);
+
+}
+
+/* =========================
+   PAGE LOAD
+========================= */
+
+window.addEventListener("load", function () {
+
+    hideAllPages();
+
+    document
+        .getElementById("welcome")
+        .classList.remove("hidden");
+
+});
