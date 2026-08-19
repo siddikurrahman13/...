@@ -198,6 +198,7 @@ function openEnvelope() {
 }
 
 
+
 /* =========================
    CHAPTER 1
 ========================= */
@@ -240,7 +241,11 @@ function showNextLine() {
 
     addTimer(
       setTimeout(function () {
-        nextBtn.style.display = "block";
+        if (nextBtn) {
+          nextBtn.style.display = "block";
+          // বাটনটি যাতে দৃশ্যমান হয় সেটার জন্য স্ক্রোল
+          nextBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
       }, 500)
     );
 
@@ -281,6 +286,12 @@ function typeText(box, text, done) {
 
       i++;
 
+      // প্রতিটি অক্ষর টাইপ হওয়ার সাথে সাথে অটো-স্ক্রোল হবে
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+
       if (i >= text.length) {
 
         clearInterval(typingTimer);
@@ -297,6 +308,8 @@ function typeText(box, text, done) {
 
   addTimer(typingTimer);
 }
+
+
 
 
 /* =========================
