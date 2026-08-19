@@ -275,7 +275,9 @@ function typeText(box, text, done) {
   const typingTimer =
     setInterval(function () {
 
-      box.textContent += text.charAt(i);
+      box.appendChild(
+        document.createTextNode(text.charAt(i))
+      );
 
       i++;
 
