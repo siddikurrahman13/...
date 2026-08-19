@@ -24,7 +24,7 @@ function toggleAudio() {
 
 
 /* =========================
-   PAGE HISTORY
+   PAGE HISTORY & LINE NAVIGATION
 ========================= */
 
 let pageHistoryArray = ["welcome"];
@@ -104,10 +104,39 @@ function showPage(pageId) {
 }
 
 
+/* 
+   ====================================================
+   UPDATE: BACK BUTTON HANDLER FOR LINE-BY-LINE RETREAT
+   ====================================================
+*/
 function goBackPage() {
 
   if (pageHistoryArray.length <= 1) return;
 
+  const currentPageId = pageHistoryArray[pageHistoryArray.length - 1];
+
+  // Chapter 2-এর জন্য লাইন ব্যাক লজিক
+  if (currentPageId === "chapter2" && c2 > 1) {
+    c2 -= 2;
+    showC2();
+    return;
+  }
+
+  // Chapter 3-এর জন্য লাইন ব্যাক লজিক
+  if (currentPageId === "chapter3" && c3 > 1) {
+    c3 -= 2;
+    showC3();
+    return;
+  }
+
+  // Birthday Reveal-এর জন্য লাইন ব্যাক লজিক
+  if (currentPageId === "birthdayReveal" && bday > 1) {
+    bday -= 2;
+    showBday();
+    return;
+  }
+
+  // লাইনের শুরুতে থাকলে আগের চ্যাপ্টারে চলে যাবে
   pageHistoryArray.pop();
 
   const previousPageId =
@@ -198,7 +227,6 @@ function openEnvelope() {
 }
 
 
-
 /* =========================
    CHAPTER 1
 ========================= */
@@ -243,7 +271,6 @@ function showNextLine() {
       setTimeout(function () {
         if (nextBtn) {
           nextBtn.style.display = "block";
-          // বাটনটি যাতে দৃশ্যমান হয় সেটার জন্য স্ক্রোল
           nextBtn.scrollIntoView({ behavior: "smooth", block: "center" });
         }
       }, 500)
@@ -286,7 +313,6 @@ function typeText(box, text, done) {
 
       i++;
 
-      // প্রতিটি অক্ষর টাইপ হওয়ার সাথে সাথে অটো-স্ক্রোল হবে
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: "smooth"
@@ -308,8 +334,6 @@ function typeText(box, text, done) {
 
   addTimer(typingTimer);
 }
-
-
 
 
 /* =========================
@@ -452,6 +476,8 @@ function showC2() {
 
   btn.style.display = "none";
 
+  clearTimers();
+
   typeText(
     textBox,
     text,
@@ -552,16 +578,12 @@ function showC3() {
     return;
   }
 
-  /*
-     IMPORTANT:
-     প্রতিবার নতুন line আসার আগে
-     আগের line পুরোপুরি remove হবে।
-  */
-
   box.innerHTML = "";
 
   btn.style.display =
     "none";
+
+  clearTimers();
 
   typeText(
     box,
@@ -651,14 +673,12 @@ function showBday() {
     return;
   }
 
-  /*
-     প্রতিবার আগের birthday line remove হবে।
-  */
-
   box.innerHTML = "";
 
   btn.style.display =
     "none";
+
+  clearTimers();
 
   typeText(
     box,
@@ -790,9 +810,11 @@ function createConfetti() {
   }
 }
 
+
 /* =========================
    CELEBRATION → FINAL MESSAGE
 ========================= */
+
 function goToFinalMessage() {
   showPage("ultimateEnding", 0);
 
@@ -852,9 +874,9 @@ function goToFinalMessage() {
   }, 1000);
 }
 
-/* PAGE LOAD — আগের ফরম্যাট বজায় রেখে */
+
+/* PAGE LOAD */
 window.addEventListener("load", function () {
   pageHistoryArray = ["welcome"];
   showPage("welcome");
 });
-
