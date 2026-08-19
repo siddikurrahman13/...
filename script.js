@@ -142,6 +142,48 @@ function goBackPage() {
 
 
 /* =========================
+   AUTO SCROLL
+   শুধু Chapter 3 থেকে নিচের
+   accumulated lines-এর জন্য
+========================= */
+
+function autoScrollToLine(element) {
+
+  if (!element) return;
+
+  setTimeout(function () {
+
+    const rect =
+      element.getBoundingClientRect();
+
+    const currentScroll =
+      window.pageYOffset ||
+      document.documentElement.scrollTop;
+
+    /*
+       Line-এর নিচে কিছু space রেখে
+       scroll করা হচ্ছে।
+
+       এতে শেষ line পুরোপুরি
+       screen-এর ভিতরে থাকবে।
+    */
+
+    const targetPosition =
+      currentScroll +
+      rect.bottom -
+      window.innerHeight +
+      120;
+
+    window.scrollTo({
+      top: Math.max(0, targetPosition),
+      behavior: "smooth"
+    });
+
+  }, 80);
+}
+
+
+/* =========================
    WELCOME → PASSWORD
 ========================= */
 
@@ -299,6 +341,7 @@ function typeText(box, text, done) {
 
 /* =========================
    CHAPTER 2
+   আগের মতোই থাকবে
 ========================= */
 
 function goToChapter2() {
@@ -459,7 +502,7 @@ function showC2() {
 
 /* =========================
    CHAPTER 3
-   ONE LINE PER PAGE
+   ACCUMULATED LINES + AUTO SCROLL
 ========================= */
 
 function goToChapter3() {
@@ -539,21 +582,34 @@ function showC3() {
 
   /*
      IMPORTANT:
-     প্রতিবার নতুন line আসার আগে
-     আগের line পুরোপুরি remove হবে।
+     আগের line আর remove হবে না।
+     নতুন line আগেরটার নিচে আসবে।
   */
 
-  box.innerHTML = "";
+  const paragraph =
+    document.createElement("p");
+
+  paragraph.className =
+    "chapter3TypingLine";
+
+  box.appendChild(paragraph);
 
   btn.style.display =
     "none";
 
   typeText(
-    box,
+    paragraph,
     chapter3Lines[c3],
     function () {
 
       c3++;
+
+      /*
+         নতুন line পুরোপুরি শেষ হওয়ার পর
+         screen নিচের দিকে যাবে।
+      */
+
+      autoScrollToLine(paragraph);
 
       btn.textContent =
         "Continue ✦";
@@ -580,7 +636,7 @@ function goToFinalChapter() {
 
 /* =========================
    BIRTHDAY REVEAL
-   ONE LINE PER PAGE
+   ACCUMULATED LINES + AUTO SCROLL
 ========================= */
 
 const birthdayLines = [
@@ -637,20 +693,29 @@ function showBday() {
   }
 
   /*
-     প্রতিবার আগের birthday line remove হবে।
+     IMPORTANT:
+     আগের birthday line আর remove হবে না।
   */
 
-  box.innerHTML = "";
+  const paragraph =
+    document.createElement("p");
+
+  paragraph.className =
+    "birthdayTypingLine";
+
+  box.appendChild(paragraph);
 
   btn.style.display =
     "none";
 
   typeText(
-    box,
+    paragraph,
     birthdayLines[bday],
     function () {
 
       bday++;
+
+      autoScrollToLine(paragraph);
 
       btn.textContent =
         "Continue ✨";
@@ -667,6 +732,7 @@ function showBday() {
 
 /* =========================
    CELEBRATION
+   আগের মতোই থাকবে
 ========================= */
 
 function goToCelebration() {
@@ -778,7 +844,7 @@ function createConfetti() {
 
 /* =========================
    ULTIMATE ENDING
-   ONE LINE AT A TIME
+   ACCUMULATED LINES + AUTO SCROLL
 ========================= */
 
 function goToFinalMessage() {
@@ -828,11 +894,9 @@ function goToFinalMessage() {
 
     /*
        IMPORTANT:
-       আগের line remove করে
-       নতুন line দেখানো হচ্ছে।
+       আগের line আর remove হবে না।
+       প্রতিটি নতুন line নিচে যোগ হবে।
     */
-
-    box.innerHTML = "";
 
     const paragraph =
       document.createElement("p");
@@ -850,10 +914,11 @@ function goToFinalMessage() {
         currentLine++;
 
         /*
-           Continue button নেই,
-           তাই একটু delay দিয়ে
-           পরের line আসবে।
+           প্রত্যেক line শেষ হওয়ার পর
+           নতুন line-এর জায়গায় auto-scroll হবে।
         */
+
+        autoScrollToLine(paragraph);
 
         addTimer(
           setTimeout(
