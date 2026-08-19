@@ -106,7 +106,7 @@ function showPage(pageId) {
 
 /* 
    ====================================================
-   UPDATE: BACK BUTTON HANDLER FOR LINE-BY-LINE RETREAT
+   INSTANT BACK BUTTON LOGIC
    ====================================================
 */
 function goBackPage() {
@@ -115,28 +115,28 @@ function goBackPage() {
 
   const currentPageId = pageHistoryArray[pageHistoryArray.length - 1];
 
-  // Chapter 2-এর জন্য লাইন ব্যাক লজিক
+  // Chapter 2-এর জন্য ব্যাক (Instant Text)
   if (currentPageId === "chapter2" && c2 > 1) {
     c2 -= 2;
-    showC2();
+    showC2(true); // true = instant show
     return;
   }
 
-  // Chapter 3-এর জন্য লাইন ব্যাক লজিক
+  // Chapter 3-এর জন্য ব্যাক (Instant Text)
   if (currentPageId === "chapter3" && c3 > 1) {
     c3 -= 2;
-    showC3();
+    showC3(true); // true = instant show
     return;
   }
 
-  // Birthday Reveal-এর জন্য লাইন ব্যাক লজিক
+  // Birthday Reveal-এর জন্য ব্যাক (Instant Text)
   if (currentPageId === "birthdayReveal" && bday > 1) {
     bday -= 2;
-    showBday();
+    showBday(true); // true = instant show
     return;
   }
 
-  // লাইনের শুরুতে থাকলে আগের চ্যাপ্টারে চলে যাবে
+  // চ্যাপ্টারের শুরুতে থাকলে আগের পেজে ফেরত যাবে
   pageHistoryArray.pop();
 
   const previousPageId =
@@ -426,7 +426,7 @@ function startChapter2() {
 }
 
 
-function showC2() {
+function showC2(isInstant = false) {
 
   const box =
     document.getElementById("chapter2Story");
@@ -478,23 +478,32 @@ function showC2() {
 
   clearTimers();
 
-  typeText(
-    textBox,
-    text,
-    function () {
+  if (isInstant) {
+    // সরাসরি দেখানোর লজিক (Back Button Click)
+    textBox.textContent = text;
+    c2++;
+    btn.textContent = "Continue ✦";
+    btn.style.display = "inline-flex";
+    btn.onclick = function () { showC2(false); };
+  } else {
+    // টাইপিং এনিমেশন সহ দেখানোর লজিক (Next Click)
+    typeText(
+      textBox,
+      text,
+      function () {
 
-      c2++;
+        c2++;
 
-      btn.textContent =
-        "Continue ✦";
+        btn.textContent =
+          "Continue ✦";
 
-      btn.style.display =
-        "inline-flex";
+        btn.style.display =
+          "inline-flex";
 
-      btn.onclick =
-        showC2;
-    }
-  );
+        btn.onclick = function () { showC2(false); };
+      }
+    );
+  }
 }
 
 
@@ -529,7 +538,7 @@ const chapter3Lines = [
 
   "কিন্তু জানিস...",
 
-  "ঠিক কখন তুই আমার কাছে এতটা important হয়ে গেলি, সেটা আমি নিজেও বুঝতে পারিনি।",
+  "ঠিক কখন তুই আমার কাছে এতটা important হয়ে গেলি, সেটা আমি মধ্যেও বুঝতে পারিনি।",
 
   "কোনো particular moment ছিল না... কোনো special day-ও না।",
 
@@ -556,7 +565,7 @@ function startChapter3() {
 }
 
 
-function showC3() {
+function showC3(isInstant = false) {
 
   const box =
     document.getElementById("chapter3Story");
@@ -585,23 +594,32 @@ function showC3() {
 
   clearTimers();
 
-  typeText(
-    box,
-    chapter3Lines[c3],
-    function () {
+  if (isInstant) {
+    // সরাসরি দেখানোর লজিক
+    box.textContent = chapter3Lines[c3];
+    c3++;
+    btn.textContent = "Continue ✦";
+    btn.style.display = "inline-flex";
+    btn.onclick = function () { showC3(false); };
+  } else {
+    // টাইপিং সহ দেখানোর লজিক
+    typeText(
+      box,
+      chapter3Lines[c3],
+      function () {
 
-      c3++;
+        c3++;
 
-      btn.textContent =
-        "Continue ✦";
+        btn.textContent =
+          "Continue ✦";
 
-      btn.style.display =
-        "inline-flex";
+        btn.style.display =
+          "inline-flex";
 
-      btn.onclick =
-        showC3;
-    }
-  );
+        btn.onclick = function () { showC3(false); };
+      }
+    );
+  }
 }
 
 
@@ -651,7 +669,7 @@ function openFinalSurprise() {
 }
 
 
-function showBday() {
+function showBday(isInstant = false) {
 
   const box =
     document.getElementById("birthdayMessage");
@@ -680,23 +698,32 @@ function showBday() {
 
   clearTimers();
 
-  typeText(
-    box,
-    birthdayLines[bday],
-    function () {
+  if (isInstant) {
+    // সরাসরি দেখানোর লজিক
+    box.textContent = birthdayLines[bday];
+    bday++;
+    btn.textContent = "Continue ✨";
+    btn.style.display = "inline-flex";
+    btn.onclick = function () { showBday(false); };
+  } else {
+    // টাইপিং সহ দেখানোর লজিক
+    typeText(
+      box,
+      birthdayLines[bday],
+      function () {
 
-      bday++;
+        bday++;
 
-      btn.textContent =
-        "Continue ✨";
+        btn.textContent =
+          "Continue ✨";
 
-      btn.style.display =
-        "inline-flex";
+        btn.style.display =
+          "inline-flex";
 
-      btn.onclick =
-        showBday;
-    }
-  );
+        btn.onclick = function () { showBday(false); };
+      }
+    );
+  }
 }
 
 
