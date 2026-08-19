@@ -142,48 +142,6 @@ function goBackPage() {
 
 
 /* =========================
-   AUTO SCROLL
-   শুধু Chapter 3 থেকে নিচের
-   accumulated lines-এর জন্য
-========================= */
-
-function autoScrollToLine(element) {
-
-  if (!element) return;
-
-  setTimeout(function () {
-
-    const rect =
-      element.getBoundingClientRect();
-
-    const currentScroll =
-      window.pageYOffset ||
-      document.documentElement.scrollTop;
-
-    /*
-       Line-এর নিচে কিছু space রেখে
-       scroll করা হচ্ছে।
-
-       এতে শেষ line পুরোপুরি
-       screen-এর ভিতরে থাকবে।
-    */
-
-    const targetPosition =
-      currentScroll +
-      rect.bottom -
-      window.innerHeight +
-      120;
-
-    window.scrollTo({
-      top: Math.max(0, targetPosition),
-      behavior: "smooth"
-    });
-
-  }, 80);
-}
-
-
-/* =========================
    WELCOME → PASSWORD
 ========================= */
 
@@ -341,7 +299,6 @@ function typeText(box, text, done) {
 
 /* =========================
    CHAPTER 2
-   আগের মতোই থাকবে
 ========================= */
 
 function goToChapter2() {
@@ -502,7 +459,7 @@ function showC2() {
 
 /* =========================
    CHAPTER 3
-   ACCUMULATED LINES + AUTO SCROLL
+   ONE LINE PER PAGE
 ========================= */
 
 function goToChapter3() {
@@ -582,34 +539,21 @@ function showC3() {
 
   /*
      IMPORTANT:
-     আগের line আর remove হবে না।
-     নতুন line আগেরটার নিচে আসবে।
+     প্রতিবার নতুন line আসার আগে
+     আগের line পুরোপুরি remove হবে।
   */
 
-  const paragraph =
-    document.createElement("p");
-
-  paragraph.className =
-    "chapter3TypingLine";
-
-  box.appendChild(paragraph);
+  box.innerHTML = "";
 
   btn.style.display =
     "none";
 
   typeText(
-    paragraph,
+    box,
     chapter3Lines[c3],
     function () {
 
       c3++;
-
-      /*
-         নতুন line পুরোপুরি শেষ হওয়ার পর
-         screen নিচের দিকে যাবে।
-      */
-
-      autoScrollToLine(paragraph);
 
       btn.textContent =
         "Continue ✦";
@@ -636,7 +580,7 @@ function goToFinalChapter() {
 
 /* =========================
    BIRTHDAY REVEAL
-   ACCUMULATED LINES + AUTO SCROLL
+   ONE LINE PER PAGE
 ========================= */
 
 const birthdayLines = [
@@ -693,29 +637,20 @@ function showBday() {
   }
 
   /*
-     IMPORTANT:
-     আগের birthday line আর remove হবে না।
+     প্রতিবার আগের birthday line remove হবে।
   */
 
-  const paragraph =
-    document.createElement("p");
-
-  paragraph.className =
-    "birthdayTypingLine";
-
-  box.appendChild(paragraph);
+  box.innerHTML = "";
 
   btn.style.display =
     "none";
 
   typeText(
-    paragraph,
+    box,
     birthdayLines[bday],
     function () {
 
       bday++;
-
-      autoScrollToLine(paragraph);
 
       btn.textContent =
         "Continue ✨";
@@ -732,7 +667,6 @@ function showBday() {
 
 /* =========================
    CELEBRATION
-   আগের মতোই থাকবে
 ========================= */
 
 function goToCelebration() {
@@ -841,116 +775,71 @@ function createConfetti() {
   }
 }
 
-
 /* =========================
-   ULTIMATE ENDING
-   ACCUMULATED LINES + AUTO SCROLL
+   CELEBRATION → FINAL MESSAGE
 ========================= */
-
 function goToFinalMessage() {
+  showPage("ultimateEnding", 0);
 
-  showPage("ultimateEnding");
-
-  const box =
-    document.getElementById("ultimateText");
-
+  const box = document.getElementById("ultimateText");
   box.innerHTML = "";
 
   const finalLines = [
-
     "I don't know what the future holds for us...",
-
     "But I'm really glad that, somehow, our paths crossed again. 🤍",
-
     "From a classroom argument to endless midnight conversations...",
-
     "কী সুন্দর একটা little journey হয়ে গেছে, তাই না? ❤️",
-
     "আর যদি আজ তোর জন্য একটা wish করতে পারতাম...",
-
-    "তাহলে চাইতাম, life তোকে ঠিক সেই happiness-টাই দিক, যেটা তুই unknowingly আমার জীবনে নিয়ে এসেছিস। 🤍",
-
+    "তাহলে চাইতাম, life তোকে ঠিক সেই happiness টাই দিক, যেটা তুই unknowingly আমার জীবনে নিয়ে এসেছিস। 🤍",
     "This whole little world you just walked through...",
-
     "এটা শুধু একটা website ছিল না।",
-
     "এটা ছিল আমার মনে জমে থাকা কিছু কথা... শুধু তোর জন্য। ❤️",
-
-    "21 August — তোর day, আর somehow এখন আমার কাছেও এই দিন টি special একটা দিন।",
-
+    "21 August  তোর day, আর somehow এখন আমার কাছেও এই দিন টি special একটা দিন।",
     "সবসময় happy থাকিস। হাসিস। আর নিজের মতোই থাকিস। 🤍",
-
     "— From someone who's really glad you found your way back. ❤️"
   ];
 
   let currentLine = 0;
 
-
-  function showFinalLine() {
-
+  function typeFinalLine() {
     if (currentLine >= finalLines.length) {
       return;
     }
 
-    /*
-       IMPORTANT:
-       আগের line আর remove হবে না।
-       প্রতিটি নতুন line নিচে যোগ হবে।
-    */
-
-    const paragraph =
-      document.createElement("p");
-
-    paragraph.className =
-      "finalTypingLine";
-
+    const paragraph = document.createElement("p");
+    paragraph.className = "finalTypingLine";
     box.appendChild(paragraph);
 
-    typeText(
-      paragraph,
-      finalLines[currentLine],
-      function () {
+    paragraph.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
 
+    const text = finalLines[currentLine];
+    let i = 0;
+
+    const typing = setInterval(function () {
+      paragraph.textContent += text.charAt(i);
+      i++;
+
+      if (i >= text.length) {
+        clearInterval(typing);
         currentLine++;
-
-        /*
-           প্রত্যেক line শেষ হওয়ার পর
-           নতুন line-এর জায়গায় auto-scroll হবে।
-        */
-
-        autoScrollToLine(paragraph);
-
-        addTimer(
-          setTimeout(
-            showFinalLine,
-            1200
-          )
-        );
+        setTimeout(function () {
+          typeFinalLine();
+        }, 1200);
       }
-    );
+    }, 45);
   }
 
-
-  addTimer(
-    setTimeout(
-      showFinalLine,
-      700
-    )
-  );
+  setTimeout(function () {
+    typeFinalLine();
+  }, 1000);
 }
 
+/* PAGE LOAD — আগের ফরম্যাট বজায় রেখে */
+window.addEventListener("load", function () {
+  pageHistoryArray = ["welcome"];
+  showPage("welcome");
+});
 
-/* =========================
-   PAGE LOAD
-========================= */
-
-window.addEventListener(
-  "load",
-  function () {
-
-    pageHistoryArray =
-      ["welcome"];
-
-    showPage("welcome");
-  }
-);
